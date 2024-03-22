@@ -59,6 +59,12 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
+    'url' => env('APP_URL', 'http://localhost'),
+    'apiEmail' => env('ADMIN_EMAIL'),
+    'apiPassword' => env('ADMIN_PASSWORD'),
+    'HeaderX' => env('HEADERX'),
+
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

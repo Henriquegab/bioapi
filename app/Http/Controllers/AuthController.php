@@ -16,10 +16,10 @@ class AuthController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => route('login')]);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:api', ['except' => route('login')]);
+    // }
 
     /**
      * Get a JWT via given credentials.
@@ -36,13 +36,21 @@ class AuthController extends Controller
                 'message' => 'Credenciais Inválidas!'
             ], 401);
         }
+        return response()->json([
+            'success' => true,
+            'message' => 'Usuário logado com sucesso!',
+            'data' => [
+                'token' => $token,
+                'user' => auth()->user()
+            ]
+        ], 200);
 
-        return $this->respondWithToken($token);
+
     }
 
     public function register(RegisterRequest $request)
     {
-        dd(1);
+
         try {
 
             $data = $request->all();
