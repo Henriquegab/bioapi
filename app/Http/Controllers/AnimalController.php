@@ -20,7 +20,7 @@ class AnimalController extends Controller
      */
     public function store(Request $request)
     {
-        dd(1);
+        //
     }
 
     /**
