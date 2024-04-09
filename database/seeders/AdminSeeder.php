@@ -14,10 +14,12 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
+        $user = User::create([
             'name' => 'lica-admin',
             'email' => Config::get('app.apiEmail'),
             'password' => bcrypt(Config::get('app.apiPassword'))
         ]);
+
+        $user->assignRole('admin');
     }
 }
