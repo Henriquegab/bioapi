@@ -25,7 +25,9 @@ Route::middleware('auth.jwt')->group(
 
         Route::post('/animal', [AnimalController::class, 'store'])->name('animal.store');
 
+        Route::get('/animal', [AnimalController::class, 'index'])->name('animal.index');
 
+        Route::get('/animal/publicados', [AnimalController::class, 'publicados'])->name('animal.publicados');
 
 
 

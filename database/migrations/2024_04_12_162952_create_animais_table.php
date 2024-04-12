@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('cidade')->nullable();
             $table->string('estado')->nullable();
             $table->unsignedBigInteger('user_id');
+            $table->boolean('publicado')->default(0);
             $table->timestamps();
         });
 

@@ -14,7 +14,45 @@ class AnimalController extends Controller
      */
     public function index()
     {
-        //
+
+        try{
+            $animal = Animal::where('publicado',0);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Posts de animais ainda não publicados retornados!',
+                'data' => $animal
+            ], 200);
+        }
+        catch(Exception $e){
+            return response()->json([
+                'success' => false,
+                'message' => 'Posts de animais não publicados não retornados!',
+
+            ], 500);
+        }
+
+    }
+    public function publicados()
+    {
+        try{
+            $animal = Animal::where('publicado', 1);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Posts de animais publicados retornados!',
+                'data' => $animal
+            ], 200);
+        }
+        catch(Exception $e){
+            return response()->json([
+                'success' => false,
+                'message' => 'Posts de animais publicados não retornados!',
+
+            ], 500);
+        }
+
+
     }
 
     /**
