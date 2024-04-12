@@ -26,7 +26,12 @@ class StoreAnimalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'titulo' => 'required|min:2|max:100'
+            'titulo' => 'required|min:2|max:100',
+            'lat' => 'required|latitude|max:25',
+            'lon' => 'required|longitude|max:25',
+            'cidade' => 'max:50',
+            'estado' => 'max:50',
+            'user_id' => 'required|exists:users,id'
         ];
     }
 

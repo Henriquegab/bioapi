@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreAnimalRequest;
 use App\Models\Animal;
+use Exception;
 use Illuminate\Http\Request;
 
 class AnimalController extends Controller
@@ -18,9 +20,35 @@ class AnimalController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreAnimalRequest $request)
     {
-        //
+
+        try{
+            $animal = Animal::create([
+                'titulo' => $request->titulo,
+                'lat' => $request->lat,
+                'lon' => $request->lon,
+                'descricao' => $request->descricao,
+                'estado' => $request->estado,
+                'cidade' => $request->cidade,
+                'user_id' => $request->user_id
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Cadastro feito com sucesso!',
+                'data' => $animal
+            ], 201);
+        }
+        catch(Exception $e){
+            return response()->json([
+                'success' => false,
+                'message' => 'Cadastro não realizado, erro de servidor!',
+
+            ], 500);
+        }
+
+
     }
 
     /**
