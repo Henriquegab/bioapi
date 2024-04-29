@@ -54,6 +54,27 @@ class AnimalController extends Controller
 
 
     }
+    public function todos()
+    {
+        try{
+            $animal = Animal::all();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Posts de animais retornados!',
+                'data' => $animal
+            ], 200);
+        }
+        catch(Exception $e){
+            return response()->json([
+                'success' => false,
+                'message' => 'Posts de animais publicados não retornados!',
+
+            ], 500);
+        }
+
+
+    }
 
     /**
      * Store a newly created resource in storage.

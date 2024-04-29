@@ -29,6 +29,8 @@ Route::middleware('auth.jwt')->group(
 
         Route::get('/animal/publicados', [AnimalController::class, 'publicados'])->name('animal.publicados');
 
+        Route::get('/animal/todos', [AnimalController::class, 'todos'])->name('animal.todos');
+
 
 
 
