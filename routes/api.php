@@ -20,7 +20,7 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
-Route::middleware(['auth.jwt','verified'])->group(
+Route::middleware(['auth.jwt','verifica.email'])->group(
     function(){
 
         Route::post('/animal', [AnimalController::class, 'store'])->name('animal.store');
