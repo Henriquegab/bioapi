@@ -8,6 +8,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Exception;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 class AuthController extends Controller
 {
@@ -51,7 +52,7 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
 
-        try {
+        // try {
 
             $data = $request->all();
 
@@ -66,6 +67,8 @@ class AuthController extends Controller
 
             $user->save();
 
+            $user->sendEmailVerificationNotification();
+
 
 
 
@@ -78,13 +81,13 @@ class AuthController extends Controller
 
                 ]
             ], 201);
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'erro',
-                'data' => $e
-            ], 500);
-        }
+        // } catch (Exception $e) {
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => 'erro',
+        //         'data' => $e->getMessage()
+        //     ], 500);
+        // }
     }
 
     /**
@@ -133,5 +136,12 @@ class AuthController extends Controller
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
+    }
+
+    protected function verify_email(EmailVerificationRequest $request)
+    {
+        $request->fulfill();
+
+        return view('auth.email.validado');
     }
 }
