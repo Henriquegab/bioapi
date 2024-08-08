@@ -37,6 +37,15 @@ class AuthController extends Controller
                 'message' => 'Credenciais Inválidas!'
             ], 401);
         }
+
+        if(is_null(auth()->user()->email_verified_at)){
+
+            auth()->user()->sendEmailVerificationNotification();
+            return response()->json([
+                'success' => false,
+                'message' => 'Email não verificado! Por favor verifique seu email.'
+            ], 403);
+        }
         return response()->json([
             'success' => true,
             'message' => 'Usuário logado com sucesso!',
