@@ -20,11 +20,15 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
+Route::post('/user/forgot_password', [AuthController::class, 'forgotPassword'])->name('auth.forgotPassword');
+
 
 Route::middleware(['auth.jwt','verifica.email'])->group(
     function(){
 
 
+
+        Route::patch('/user/update_password', [AuthController::class, 'update'])->name('auth.update');
 
         Route::post('/animal', [AnimalController::class, 'store'])->name('animal.store');
 

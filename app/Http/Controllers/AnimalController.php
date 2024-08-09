@@ -85,12 +85,13 @@ class AnimalController extends Controller
         try{
             $animal = Animal::create([
                 'titulo' => $request->titulo,
+                'animal' => $request->animal,
                 'lat' => $request->lat,
                 'lon' => $request->lon,
                 'descricao' => $request->descricao,
                 'estado' => $request->estado,
                 'cidade' => $request->cidade,
-                'user_id' => $request->user_id
+                'user_id' => auth()->user()->id
             ]);
 
             return response()->json([
@@ -103,6 +104,7 @@ class AnimalController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Cadastro não realizado, erro de servidor!',
+                "data" => $e->getMessage()
 
             ], 500);
         }

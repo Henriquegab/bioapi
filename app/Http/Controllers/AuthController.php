@@ -4,23 +4,35 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\UpdateUserRequest;
+use App\Mail\CadastroEmail;
+use App\Mail\ForgotPassword;
 use App\Models\User;
+use App\Services\UpdatePasswordService;
 use Exception;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use PhpParser\Node\Expr\Instanceof_;
+
+use function PHPUnit\Framework\isInstanceOf;
 
 class AuthController extends Controller
 {
+    private $updatePassword;
+
     /**
      * Create a new AuthController instance.
      *
      * @return void
      */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth:api', ['except' => route('login')]);
-    // }
+    public function __construct()
+    {
+        $this->updatePassword = app(UpdatePasswordService::class) ;
+    }
 
     /**
      * Get a JWT via given credentials.
@@ -61,7 +73,7 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
 
-        // try {
+        try {
 
             $data = $request->all();
 
@@ -84,19 +96,19 @@ class AuthController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Usuário criado com sucesso!',
+                'message' => 'Usuário criado com sucesso! verifique seu email!',
                 'data' => [
                     'user' => $user,
 
                 ]
             ], 201);
-        // } catch (Exception $e) {
-        //     return response()->json([
-        //         'success' => false,
-        //         'message' => 'erro',
-        //         'data' => $e->getMessage()
-        //     ], 500);
-        // }
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'erro',
+                'data' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -152,5 +164,39 @@ class AuthController extends Controller
         $request->fulfill();
 
         return view('auth.email.validado');
+    }
+    protected function update(UpdateUserRequest $request)
+    {
+
+        if($this->updatePassword->verifySamePassword($request->password,auth()->user()->password)){
+            return response()->json([
+                'success' => false,
+                'message' => 'A senha não pode ser a mesma!'
+            ], 400);
+        }
+
+        $this->updatePassword->changePassword($request->password);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Senha alterada com sucesso!'
+        ], 200);
+
+    }
+
+    protected function forgotPassword(ForgotPasswordRequest $request)
+    {
+
+        $user = User::where('email',$request->email)->first();
+
+        Mail::to($user)->send(new ForgotPassword($user, $senha = '123456'));
+
+        $this->updatePassword->changePasswordWithoutAuth($request->password, $user);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Senha alterada com sucesso! verifique seu email.'
+        ], 200);
+
     }
 }

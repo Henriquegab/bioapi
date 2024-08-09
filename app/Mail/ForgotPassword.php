@@ -9,16 +9,18 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class CadastroEmail extends Mailable
+class ForgotPassword extends Mailable
 {
     use Queueable, SerializesModels;
+
+
 
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(public $user, public $senha)
     {
-        //
+        $senha = '123456';
     }
 
     /**
@@ -27,7 +29,7 @@ class CadastroEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Cadastro Email',
+            subject: 'Nova Senha',
         );
     }
 
@@ -37,7 +39,7 @@ class CadastroEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'auth.email.validado',
+            view: 'auth.email.forgotPassword',
         );
     }
 

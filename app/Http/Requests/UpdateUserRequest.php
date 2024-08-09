@@ -8,7 +8,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 use Illuminate\Contracts\Validation\Validator;
 
-class StoreAnimalRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,12 +26,7 @@ class StoreAnimalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'titulo' => 'required|min:2|max:100',
-            'lat' => 'required|latitude|max:25',
-            'lon' => 'required|longitude|max:25',
-            'cidade' => 'max:50',
-            'estado' => 'max:50',
-            // 'imagem' => 'required|mimes:png,jpg|size:8192',
+            'password' => 'required|min:6|max:30'
         ];
     }
 

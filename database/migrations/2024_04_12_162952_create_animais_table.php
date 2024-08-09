@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('titulo');
             $table->text('descricao')->nullable();
-            $table->string('animal');
+            $table->string('animal')->nullable();
             $table->string('lat');
             $table->string('lon');
             $table->string('cidade')->nullable();

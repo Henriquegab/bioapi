@@ -18,10 +18,19 @@ class EmailValidation
      */
     public function handle($request, Closure $next, $redirectToRoute = null)
     {
-        dd($request->user()->hasVerifiedEmail());
+        if($request->user()->hasVerifiedEmail()){
+            return $next($request);
+        }
+        else{
+            $request->user()->sendEmailVerificationNotification();
+            return response()->json([
+                'success' => false,
+                'message' => 'Email não verificado! Verifique seu email.'
+            ], 403);
+        }
 
 
 
-        return $next($request);
+
     }
 }

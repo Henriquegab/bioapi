@@ -34,7 +34,6 @@ class AnimalTest extends TestCase
         [
         'titulo' => 'test',
         'descricao' => 'test@',
-        'user_id' => '1',
         'lat' => '1',
         'lon' => '1',
         'estado' => 'MG',
