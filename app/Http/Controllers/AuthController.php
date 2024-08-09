@@ -189,9 +189,11 @@ class AuthController extends Controller
 
         $user = User::where('email',$request->email)->first();
 
-        Mail::to($user)->send(new ForgotPassword($user, $senha = '123456'));
+        $senha = rand(100000, 999999);
 
-        $this->updatePassword->changePasswordWithoutAuth($request->password, $user);
+        Mail::to($user)->send(new ForgotPassword($user, $senha));
+
+        $this->updatePassword->changePasswordWithoutAuth($senha, $user);
 
         return response()->json([
             'success' => true,
