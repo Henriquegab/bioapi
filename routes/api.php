@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,13 @@ Route::middleware(['auth.jwt','verifica.email'])->group(
 
 
         Route::patch('/user/update_password', [AuthController::class, 'update'])->name('auth.update');
+
+        Route::post('/user/update', [UserController::class, 'update'])->name('user.update');
+
+
+        Route::get('/user/me', [AuthController::class, 'me'])->name('auth.me');
+
+        Route::get('/user/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
         Route::post('/animal', [AnimalController::class, 'store'])->name('animal.store');
 

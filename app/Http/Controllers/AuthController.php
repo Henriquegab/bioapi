@@ -118,6 +118,22 @@ class AuthController extends Controller
      */
     public function me()
     {
+        try {
+            return response()->json([
+                'success' => true,
+                'message' => 'Dados do seu usuário recuperado!',
+                'data' => auth()->user()
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Dados não recuperados!',
+
+            ], 500);
+        }
+
+
+
         return response()->json(auth()->user());
     }
 
@@ -128,9 +144,24 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        try{
+            auth()->logout();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Deslogado com sucesso!'
+            ]);
+        }
+        catch(Exception $e){
+            return response()->json([
+                'success' => false,
+                'message' => 'Não foi possível deslogar!',
+                'data' => $e->getMessage()
+            ]);
+        }
+
+
     }
 
     /**
