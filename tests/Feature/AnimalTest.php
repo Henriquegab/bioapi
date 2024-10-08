@@ -53,6 +53,7 @@ class AnimalTest extends TestCase
 
         Animal::destroy($response->json('data.animal.id'));
         Imagem::destroy($response->json('data.imagem.id'));
+        \Storage::disk('public')->delete($response->json('data.imagem.caminho'));
 
         $response->assertStatus(201);
     }
