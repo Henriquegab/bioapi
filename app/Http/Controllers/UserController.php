@@ -6,6 +6,7 @@ use App\Http\Requests\UpdateUserNameRequest;
 use App\Models\Imagem;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -42,9 +43,22 @@ class UserController extends Controller
         $user = User::find($user_id);
 
 
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => $request->hasFile('image'),
+        //     'data'=> $user
+        // ], 200);
 
-        if ($request->hasFile('profile_picture')) {
+
+
+        if ($request->hasFile('image')) {
             // Obtém a data atual no formato "dia-mês-ano"
+            // return response()->json([
+            //     'success' => true,
+            //     'message' => 'tem imagem',
+            //     'data'=> $user
+            // ], 200);
+
             $dateFolder = now()->format('d-m-Y');
 
             // Verifica se existe alguma imagem do tipo "profile_picture" associada ao usuário
@@ -61,7 +75,7 @@ class UserController extends Controller
             }
 
             // Define o caminho completo onde a imagem será salva
-            $filePath = $request->file('profile_picture')->store("profile_pictures/{$dateFolder}", 'public');
+            $filePath = $request->file('image')->store("profile_pictures/{$dateFolder}", 'public');
 
             // Cria um registro no modelo Imagem
             Imagem::create([
@@ -80,7 +94,7 @@ class UserController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Nome alterado com sucesso!',
+            'message' => 'salvo',
             'data'=> $user
         ], 200);
     }

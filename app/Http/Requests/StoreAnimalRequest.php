@@ -31,7 +31,7 @@ class StoreAnimalRequest extends FormRequest
             'lon' => 'required|longitude|max:25',
             'cidade' => 'max:50',
             'estado' => 'max:50',
-            // 'imagem' => 'required|mimes:png,jpg|size:8192',
+            'imagem' => 'required|mimes:png,jpg|max:8192',
         ];
     }
 

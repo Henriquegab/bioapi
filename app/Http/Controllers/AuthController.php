@@ -10,6 +10,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Mail\CadastroEmail;
 use App\Mail\ForgotPassword;
+use App\Models\Imagem;
 use App\Models\User;
 use App\Services\UpdatePasswordService;
 use Exception;
@@ -58,12 +59,26 @@ class AuthController extends Controller
                 'message' => 'Email não verificado! Por favor verifique seu email.'
             ], 403);
         }
+
+        $profile_picture = Imagem::where('user_id', auth()->user()->id)->where('tipo','profile_picture');
+
+
+
+
+
+        if(is_null($profile_picture->first())){
+            $image = null;
+        }
+        else{
+            $image = $profile_picture->first()->caminho;
+        }
         return response()->json([
             'success' => true,
             'message' => 'Usuário logado com sucesso!',
             'data' => [
                 'token' => $token,
-                'user' => auth()->user()
+                'user' => auth()->user(),
+                'profile_picture' => "storage/".$image
             ]
         ], 200);
 

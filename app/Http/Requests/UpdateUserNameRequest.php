@@ -26,7 +26,8 @@ class UpdateUserNameRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'min:2|max:40|nullable'
+            'name' => 'min:2|max:40|nullable',
+            // 'profile_picture' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048'
         ];
     }
 

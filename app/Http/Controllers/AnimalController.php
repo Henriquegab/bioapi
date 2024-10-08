@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAnimalRequest;
 use App\Models\Animal;
+use App\Models\Imagem;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -89,15 +90,40 @@ class AnimalController extends Controller
                 'lat' => $request->lat,
                 'lon' => $request->lon,
                 'descricao' => $request->descricao,
-                'estado' => $request->estado,
-                'cidade' => $request->cidade,
+                'estado' => "MG",
+                'cidade' => "Montes Claros",
+                'publicado' => 0,
                 'user_id' => auth()->user()->id
             ]);
+
+            if ($request->hasFile('imagem')) {
+
+
+                $dateFolder = now()->format('d-m-Y');
+
+
+
+                // Define o caminho completo onde a imagem será salva
+                $filePath = $request->file('imagem')->store("animals/{$dateFolder}", 'public');
+
+                // Cria um registro no modelo Imagem
+                $imagem = Imagem::create([
+                    'caminho' => $filePath,
+                    'tipo' => 'animal',
+                    'user_id' => auth()->user()->id,
+                    'animal_id' => $animal->id
+                ]);
+            }
+
+
 
             return response()->json([
                 'success' => true,
                 'message' => 'Cadastro feito com sucesso!',
-                'data' => $animal
+                'data' => [
+                    'animal' => $animal,
+                    'imagem' => $imagem
+                ]
             ], 201);
         }
         catch(Exception $e){
