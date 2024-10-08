@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Animal;
+use App\Models\Imagem;
 use App\Services\JwtTokenService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -30,6 +31,11 @@ class AnimalTest extends TestCase
 
         $headers = $this->jwt->getHeaderForTest();
 
+        $imageUrl = 'https://avatars.githubusercontent.com/u/67250181?v=4';
+        $imageContents = file_get_contents($imageUrl);
+        $tempFilePath = tempnam(sys_get_temp_dir(), 'upload');
+        file_put_contents($tempFilePath, $imageContents);
+
         $response = $this->json('POST', '/api/animal',
         [
         'titulo' => 'test',
@@ -37,14 +43,16 @@ class AnimalTest extends TestCase
         'lat' => '1',
         'lon' => '1',
         'estado' => 'MG',
-        'cidade' => 'montes claros'
+        'cidade' => 'montes claros',
+        'imagem' => new \Illuminate\Http\UploadedFile($tempFilePath, 'image.jpg', null, null, true)
         ]
         , $headers);
 
 
         // dd($response);
 
-        Animal::destroy($response->json('data.id'));
+        Animal::destroy($response->json('data.animal.id'));
+        Imagem::destroy($response->json('data.imagem.id'));
 
         $response->assertStatus(201);
     }
