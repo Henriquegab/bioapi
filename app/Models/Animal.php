@@ -10,4 +10,9 @@ class Animal extends Model
     use HasFactory;
     protected $table = 'Animais';
     protected $fillable = ['titulo','animal', 'descricao','publicado', 'lat', 'lon','cidade','estado','user_id'];
+
+    public function imagem()
+    {
+        return $this->hasMany(Imagem::class, 'animal_id');
+    }
 }

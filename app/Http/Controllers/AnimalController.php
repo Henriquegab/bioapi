@@ -15,25 +15,30 @@ class AnimalController extends Controller
      */
     public function index()
     {
+        try {
+            // Defina quantos itens você quer por página, por exemplo, 10
+            $perPage = 10;
 
-        try{
-            $animal = Animal::where('publicado',0);
+            // Paginação utilizando o método paginate()
+            $animal = Animal::with('imagem')->where('publicado', 0)->paginate($perPage);
 
             return response()->json([
                 'success' => true,
                 'message' => 'Posts de animais ainda não publicados retornados!',
-                'data' => $animal
+                'data' => $animal->items(),  // Apenas os itens da página atual
+                'current_page' => $animal->currentPage(),
+                'last_page' => $animal->lastPage(),
+                'total' => $animal->total(),
+                'per_page' => $animal->perPage(),
             ], 200);
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Posts de animais não publicados não retornados!',
-
             ], 500);
         }
-
     }
+
     public function publicados()
     {
         try{
