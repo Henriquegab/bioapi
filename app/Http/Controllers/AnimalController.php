@@ -13,19 +13,22 @@ class AnimalController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            // Defina quantos itens você quer por página, por exemplo, 10
-            $perPage = 10;
+            // Definir o valor padrão para o número de itens por página
+            $perPage = $request->input('per_page', 10); // Se não for passado, o valor padrão é 10
+            $page = $request->input('page', 1); // Se não for passado, a página padrão é 1
 
-            // Paginação utilizando o método paginate()
-            $animal = Animal::with('imagem')->where('publicado', 0)->paginate($perPage);
+            // Paginação utilizando o método paginate() com a página e itens por página especificados
+            $animal = Animal::with('imagem')
+                ->where('publicado', 0)
+                ->paginate($perPage, ['*'], 'page', $page); // Utilizando o 'page' vindo da requisição
 
             return response()->json([
                 'success' => true,
                 'message' => 'Posts de animais ainda não publicados retornados!',
-                'data' => $animal->items(),  // Apenas os itens da página atual
+                'data' => $animal->items(), // Apenas os itens da página atual
                 'current_page' => $animal->currentPage(),
                 'last_page' => $animal->lastPage(),
                 'total' => $animal->total(),
