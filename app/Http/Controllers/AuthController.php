@@ -42,25 +42,32 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        $credentials = $request->only('email', 'password');
 
-        if (! $token = auth()->attempt($credentials)) {
+        $credentials = $request->only('email', 'password');
+        $user = \App\Models\User::where('email', $credentials['email'])->first();
+        if (!$user) {
+            return response()->json(['error' => 'Usuário não encontrado'], 404);
+        }
+        // dd(1);
+
+        if (!$token = auth()->guard('api')->attempt($credentials)) {
             return response()->json([
                 'success' => false,
                 'message' => 'Credenciais Inválidas!'
             ], 401);
         }
 
-        if(is_null(auth()->user()->email_verified_at)){
 
-            auth()->user()->sendEmailVerificationNotification();
+        if(is_null(auth()->guard('api')->user()->email_verified_at)){
+
+            auth()->guard('api')->user()->sendEmailVerificationNotification();
             return response()->json([
                 'success' => false,
                 'message' => 'Email não verificado! Por favor verifique seu email.'
             ], 403);
         }
 
-        $profile_picture = Imagem::where('user_id', auth()->user()->id)->where('tipo','profile_picture');
+        $profile_picture = Imagem::where('user_id', auth()->guard('api')->user()->id)->where('tipo','profile_picture');
 
 
 
@@ -77,7 +84,7 @@ class AuthController extends Controller
             'message' => 'Usuário logado com sucesso!',
             'data' => [
                 'token' => $token,
-                'user' => auth()->user(),
+                'user' => auth()->guard('api')->user(),
                 'profile_picture' => "storage/".$image
             ]
         ], 200);
