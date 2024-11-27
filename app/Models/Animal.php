@@ -15,4 +15,8 @@ class Animal extends Model
     {
         return $this->hasMany(Imagem::class, 'animal_id');
     }
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id','user_id');
+    }
 }

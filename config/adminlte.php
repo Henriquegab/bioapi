@@ -64,7 +64,7 @@ return [
     */
 
     'logo' => '<b>Sistema</b>DosUrso',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo_img' => 'logo/logo.jpg',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -86,7 +86,7 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'logo/logo.jpg',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,
@@ -113,7 +113,7 @@ return [
         'enabled' => true,
         'mode' => 'fullscreen',
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'logo/logo.jpg',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
             'width' => 60,
@@ -300,98 +300,80 @@ return [
 
     'menu' => [
         // Navbar items:
-        [
-            'type' => 'navbar-search',
-            'text' => 'search',
-            'topnav_right' => true,
-        ],
-        [
-            'type' => 'fullscreen-widget',
-            'topnav_right' => true,
-        ],
 
         // Sidebar items:
+
         [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
+            'text' => 'Listagem de animais',
+            // 'url' => '/#',
+            'icon' => 'fas fa-fw fa-cat',
+            'route' => 'animalweb.index',
         ],
         [
-            'text' => 'blog',
-            'url' => 'admin/blog',
-            'can' => 'manage-blog',
+            'text' => 'Minhas Solicitações',
+            // 'route' => 'aluno.solicitacoes.index',
+            'url' => '/#',
+            'icon' => 'fas fa-fw fa-pager',
+            // 'can' => 'Visualizar solicitacoes de aluno',
         ],
         [
-            'text' => 'pages',
-            'url' => 'admin/pages',
-            'icon' => 'far fa-fw fa-file',
-            'label' => 4,
-            'label_color' => 'success',
+            'text' => 'Meus Atendimentos',
+            // 'route' => 'psicologo.solicitacoes.index',
+            'url' => '/#',
+            'icon' => 'fa fa-fw fa-pager',
+            // 'can' => 'Visualizar solicitacoes dos psicologos',
+            'active' => ['psicologo/solicitacoes/*'],
         ],
-        ['header' => 'account_settings'],
+
         [
-            'text' => 'profile',
-            'url' => 'admin/settings',
+            'text' => 'Fila de Atendimentos',
+            // 'route' => 'solicitacoes.index',
+            'url' => '/#',
+            'icon' => 'fas fa-fw fa-pager',
+            // 'can' => 'Visualizar solicitacoes',
+            'active' => ['solicitacoes/*'],
+        ],
+        [
+            'text' => 'Alunos',
+            // 'route' => 'admin.aluno.index',
+            'url' => '/#',
+            'icon' => 'fas fa-fw fa-users',
+            // 'can' => 'Listar alunos',
+            'active' => ['admin/aluno/*'],
+        ],
+        [
+            'text' => 'Psicólogos',
+            // 'route' => 'admin.psicologo.index',
+            'url' => '/#',
+            'icon' => 'fas fa-fw fa-user-md',
+
+            // 'can' => 'Visualizar psicologos',
+            'active' => ['admin/psicologo/*'],
+        ],
+        [
+            'text' => 'Relatórios',
+            // 'route' => 'admin.relatorios.index',
+            'url' => '/#',
+            'icon' => 'fas fa-fw fa-file',
+            // 'can' => 'Exportar relatorios',
+        ],
+        [
+            'text' => 'Perfil',
+            // 'route' => 'perfil.index',
+            'url' => '/#',
             'icon' => 'fas fa-fw fa-user',
+            // 'can' => 'Visualizar perfil',
         ],
         [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
+            'text' => 'Registro de Eventos',
+            'url' => '/#',
+            // 'url' => 'admin/logs',
+            'icon' => 'fas fa-history fa-fw',
+            // 'can' => 'Logs',
+            // 'active' => ['admin/logs/*']
         ],
-        [
-            'text' => 'multilevel',
-            'icon' => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-            ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text' => 'important',
-            'icon_color' => 'red',
-            'url' => '#',
-        ],
-        [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
-        ],
-        [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
-        ],
+
+
     ],
 
     /*

@@ -58,19 +58,17 @@ class AnimalTest extends TestCase
         $response->assertStatus(201);
     }
 
-    // public function test_if_delete_animal_is_ok(): void
-    // {
+    public function test_if_index_animal_is_ok(): void
+    {
 
-    //     $headers = $this->jwt->getHeaderForTest();
-
-
-    //     $response = $this->json('DELETE', '/api/animal/'.$this->animalId,
-
-    //     [], $headers);
+        $headers = $this->jwt->getHeaderForTest();
+        $response = $this->json('GET', '/api/animal',[], $headers);
 
 
-    //     // dd($response);
 
-    //     $response->assertStatus(200);
-    // }
+
+        $response->assertStatus(200);
+    }
+
+
 }

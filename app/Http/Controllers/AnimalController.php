@@ -159,7 +159,12 @@ class AnimalController extends Controller
      */
     public function update(Request $request, Animal $animal)
     {
-        //
+        // $animal = Questionario::with('prontuario.prontuario-origem');
+
+        // $animal->questionario->pronturario->
+
+
+
     }
 
     /**
