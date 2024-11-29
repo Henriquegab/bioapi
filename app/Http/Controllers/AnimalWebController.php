@@ -56,7 +56,9 @@ class AnimalWebController extends Controller
     {
         $animal = Animal::with('imagem')->findOrFail($id);
 
-        return view('animal.show', ['animal' => $animal]);
+        $coordenada = ['lat' => $animal->lat, 'lng' => $animal->lon, 'titulo' => $animal->titulo];
+
+        return view('animal.show', ['animal' => $animal, 'coordenada' => $coordenada]);
     }
 
     /**
