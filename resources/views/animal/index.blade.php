@@ -16,7 +16,7 @@
 
     {{-- Pesquisa de Animais --}}
 
-    <div class="card card-dark">
+    <div class="card card-primary">
         <div class="card-header">
             <h3 class="card-title">Pesquisar posts de animais cadastrados no sistema</h3>
         </div>
@@ -29,22 +29,42 @@
                         <input maxlength="200" type="search" class="form-control" name="titulo"
                             value="{{ request()->titulo ?? '' }}" placeholder="ex.: Leão encontrado na selva">
                     </div>
-                    <div class="col-md-3 form-group">
+                    <div class="col-md-6 form-group">
                         <label for="name">Animal</label>
                         <input maxlength="200" type="search" class="form-control" name="animal"
                             value="{{ request()->animal ?? '' }}" placeholder="ex.: Leão">
                     </div>
-                    <div class="col-md-3 form-group">
-                        <label for="name">Status</label>
-                        <select class="custom-select"
-                            id="tipo" name="tipo">
-                            <option disabled selected value="">Selecione o tipo de status</option>
-                            <option value="0" {{ old('tipo') === 0 ? 'selected' : '' }}>Não publicado (as)
-                            </option>
-                            <option value="1" {{ old('tipo') === 'Publicado' ? 'selected' : '' }}>Publicado</option>
 
-                        </select>
+
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="name">Criado por</label>
+                        <input maxlength="200" type="search" class="form-control" name="titulo"
+                            value="{{ request()->titulo ?? '' }}" placeholder="ex.: Leão encontrado na selva">
                     </div>
+                    <div class="col-md-6 form-group">
+                        <label for="publicado">Status</label>
+                        <select class="custom-select" id="publicado" name="publicado">
+                            <option disabled {{ request()->publicado === null ? 'selected' : '' }} value="">Selecione o tipo de status</option>
+                            <option value="0" {{ request()->publicado === "0" ? 'selected' : '' }}>Não publicado</option>
+                            <option value="1" {{ request()->publicado === "1" ? 'selected' : '' }}>Publicado</option>
+                        </select>
+
+                    </div>
+                    {{-- <div class="col-md-3 form-group">
+
+                        <div class="btn-group ">
+
+                            <button type="submit" class="btn btn-primary float-right text-nowrap"><i class="fa fa-search"></i>
+                                Pesquisar</button>
+                            <a href="{{ route('animalweb.index') }}" class="btn btn-outline-primary text-nowrap mr-4"><i
+                                    class="fa fa-eraser "></i> Limpar busca</a>
+
+                        </div>
+
+                    </div> --}}
 
 
                 </div>
@@ -53,7 +73,7 @@
             <div class="pb-4 d-flex align-items-center justify-content-end table-responsive">
                 <div class="btn-group ">
 
-                    <button type="submit" class="btn btn-dark float-right text-nowrap"><i class="fa fa-search"></i>
+                    <button type="submit" class="btn btn-primary float-right text-nowrap"><i class="fa fa-search"></i>
                         Pesquisar</button>
                     <a href="{{ route('animalweb.index') }}" class="btn btn-outline-primary text-nowrap mr-4"><i
                             class="fa fa-eraser "></i> Limpar busca</a>
@@ -65,7 +85,7 @@
 
     </div>
 
-    <div class="card card-dark card-outline">
+    <div class="card card-primary card-outline">
 
         <div class="card-body table-responsive p-0">
             <table class="table table-bordered table-striped dataTable dtr-inline">

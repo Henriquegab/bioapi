@@ -14,14 +14,20 @@ class AnimalWebController extends Controller
     public function index(Request $request)
     {
 
-            // Definir o valor padrão para o número de itens por página
-            $perPage = $request->input('per_page', 10); // Se não for passado, o valor padrão é 10
-            $page = $request->input('page', 1); // Se não for passado, a página padrão é 1
+            // // Definir o valor padrão para o número de itens por página
+            // $perPage = $request->input('per_page', 10); // Se não for passado, o valor padrão é 10
+            // $page = $request->input('page', 1); // Se não for passado, a página padrão é 1
 
-            // Paginação utilizando o método paginate() com a página e itens por página especificados
-            $animais = Animal::with('imagem')
-            ->where('publicado', 0)
-            ->paginate($perPage, ['*'], 'page', $page); // Utilizando o 'page' vindo da requisição
+            // // Paginação utilizando o método paginate() com a página e itens por página especificados
+            // $animais = Animal::with('imagem')
+            // ->where('publicado', 0)
+            // ->paginate($perPage, ['*'], 'page', $page); // Utilizando o 'page' vindo da requisição
+
+            // return view('animal.index', ['animais' => $animais]);
+
+            $animais = Animal::with('imagem')->search($request)
+            ->orderBy('created_at', 'DESC')
+            ->paginate(15);
 
             return view('animal.index', ['animais' => $animais]);
 
@@ -58,7 +64,9 @@ class AnimalWebController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $animal = Animal::with('imagem')->findOrFail($id);
+
+        return view('animal.edit', ['animal' => $animal]);
     }
 
     /**

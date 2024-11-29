@@ -3,6 +3,7 @@
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\AnimalWebController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserWebController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -40,5 +41,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('animalweb', AnimalWebController::class);
+Route::resource('userweb', UserWebController::class);
+
 
 
