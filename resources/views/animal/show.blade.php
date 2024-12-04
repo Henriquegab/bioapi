@@ -4,6 +4,9 @@
 
 @section('content_header')
 
+<link href="resources/css/lightbox.css" rel="stylesheet" />
+<script src="resources/js/lightbox-plus-jquery.js"></script>
+
 @stop
 
 @section('content')
@@ -27,10 +30,43 @@
         <div class="card-body row justify-content-around">
             <div class="col-md-5" style="position: relative; overflow: hidden; width: 100%; height: 100%;">
                 <div class="elevation-2">
-                    <a href="{{ asset('storage/'.$animal->imagem->first()->caminho) }}" data-lightbox="animal-gallery " >
+                    {{-- <a href="{{ asset('storage/'.$animal->imagem->first()->caminho) }}" data-lightbox="animal-gallery " >
                         <img src="{{ asset('storage/'.$animal->imagem->first()->caminho) }}" alt="Animal" style="width: 100%; height: 100%; object-fit: cover;">
-                    </a>
+                    </a> --}}
+                    @foreach ($animal->imagem as $imagem)
+                            <a href="{{ Storage::url($imagem->caminho) }}" data-lightbox="roadtrip" data-title="My caption">
+                                <img src="{{ Storage::url($imagem->caminho) }}"
+                                 alt="Imagem do Animal"
+                                 style="width: 100px; height: 75px; object-fit: cover; margin: 5px;">
+                            </a>
+                    @endforeach
+
                 </div>
+                {{-- <div class="gallery">
+                    @foreach ($animal->imagem as $imagem)
+                        <a href="{{ Storage::url($imagem->caminho) }}"
+                           data-lightbox="animal-gallery"
+                           data-title="Imagem do Animal">
+                            <img src="{{ Storage::url($imagem->caminho) }}"
+                                 alt="Imagem do Animal"
+                                 style="width: 100px; height: 75px; object-fit: cover; margin: 5px;">
+                        </a>
+                    @endforeach
+                </div> --}}
+
+                {{-- <div class="gallery">
+                    <div class="gallery-preview">
+                        <img src="{{ Storage::url($animal->imagem->first()->caminho) }}" alt="imagem do animal" class="gallery-main-image">
+                    </div>
+                    <div class="gallery-thumbnails">
+                        @foreach ($animal->imagem as $image)
+                        <div class="gallery-thumbnail">
+                            <img src="{{ Storage::url($image->caminho) }}" alt="imagem do animal" data-large-image="{{ Storage::url($image->caminho) }}">
+                        </div>
+                        @endforeach
+                    </div>
+                </div> --}}
+
 
 
             </div>
